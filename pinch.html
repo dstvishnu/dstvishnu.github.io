@@ -60,12 +60,12 @@ function pointermove_handler(ev) {
    if (prevDiff > 0) {
      if (curDiff > prevDiff) {
        // The distance between the two pointers has increased
-       
+        $("#target").animate({ 'zoom': curDiff }, 400);
        ev.target.style.background = "pink";
      }
      if (curDiff < prevDiff) {
        // The distance between the two pointers has decreased
-       
+        $("#target").animate({ 'zoom': 1 }, 400);
        ev.target.style.background = "lightblue";
      }
    }
@@ -114,6 +114,9 @@ function init() {
  <div id="target">Touch and Hold with 2 pointers, then pinch in or out.<br/>
     The background color will change to pink if the pinch is opening (Zoom In) 
     or changes to lightblue if the pinch is closing (Zoom out).</div>
+ <!-- UI for logging/debugging -->
+ <button id="log" onclick="enableLog(event);">Start/Stop event logging</button>
+ <button id="clearlog" onclick="clearLog(event);">Clear the log</button>
  <p></p>
  <output></output>
 </body>
