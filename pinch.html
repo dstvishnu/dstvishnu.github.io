@@ -60,12 +60,12 @@ function pointermove_handler(ev) {
    if (prevDiff > 0) {
      if (curDiff > prevDiff) {
        // The distance between the two pointers has increased
-        $("#target").animate({ 'zoom': curDiff }, 400);
+        $("#target").animate({ 'zoom': 1.2 }, 10);
        ev.target.style.background = "pink";
      }
      if (curDiff < prevDiff) {
        // The distance between the two pointers has decreased
-        $("#target").animate({ 'zoom': 1 }, 400);
+        $("#target").animate({ 'zoom': 1 }, 10);
        ev.target.style.background = "lightblue";
      }
    }
