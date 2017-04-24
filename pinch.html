@@ -26,31 +26,10 @@ var logEvents = false;
 // Global vars to cache event state
 var evCache = new Array();
 var prevDiff = -1;
-
-// Logging/debugging functions
-function enableLog(ev) {
-  logEvents = logEvents ? false : true;
-}
-
-function log(prefix, ev) {
-  if (!logEvents) return;
-  var o = document.getElementsByTagName('output')[0];
-  var s = prefix + ": pointerID = " + ev.pointerId +
-                " ; pointerType = " + ev.pointerType +
-                " ; isPrimary = " + ev.isPrimary;
-  o.innerHTML += s + " <br>";
-} 
-
-function clearLog(event) {
- var o = document.getElementsByTagName('output')[0];
- o.innerHTML = "";
-}
-
 function pointerdown_handler(ev) {
  // The pointerdown event signals the start of a touch interaction.
  // This event is cached to support 2-finger gestures
  evCache.push(ev);
- log("pointerDown", ev);
 }
 
 function pointermove_handler(ev) {
@@ -62,7 +41,7 @@ function pointermove_handler(ev) {
  //
  // This function sets the target element's border to "dashed" to visually
  // indicate the pointer's target received a move event.
- log("pointerMove", ev);
+ 
  ev.target.style.border = "dashed";
 
  // Find this event in the cache and update its record with this event
@@ -81,12 +60,12 @@ function pointermove_handler(ev) {
    if (prevDiff > 0) {
      if (curDiff > prevDiff) {
        // The distance between the two pointers has increased
-       log("Pinch moving OUT -> Zoom in", ev);
+       
        ev.target.style.background = "pink";
      }
      if (curDiff < prevDiff) {
        // The distance between the two pointers has decreased
-       log("Pinch moving IN -> Zoom out",ev);
+       
        ev.target.style.background = "lightblue";
      }
    }
@@ -97,7 +76,6 @@ function pointermove_handler(ev) {
 }
 
 function pointerup_handler(ev) {
-  log(ev.type, ev);
   // Remove this pointer from the cache and reset the target's
   // background and border
   remove_event(ev);
@@ -123,9 +101,6 @@ function init() {
  var el=document.getElementById("target");
  el.onpointerdown = pointerdown_handler;
  el.onpointermove = pointermove_handler;
-
- // Use same handler for pointer{up,cancel,out,leave} events since
- // the semantics for these events - in this app - are the same.
  el.onpointerup = pointerup_handler;
  el.onpointercancel = pointerup_handler;
  el.onpointerout = pointerup_handler;
